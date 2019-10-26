@@ -4,11 +4,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter/services.dart' show SystemChannels, TextInputType;
-
 import 'package:google_sign_in/google_sign_in.dart' show GoogleUserCircleAvatar;
 
-import 'package:auth/auth.dart' show Auth;
+import 'package:auth/auth.dart';
 
 void main() {
   runApp(
@@ -29,7 +27,6 @@ class SignInDemoState extends State<SignInDemo>
   Auth auth;
   bool loggedIn = false;
   TabController tabController;
-  String errorMessage = "";
 
   @override
   void initState() {
@@ -44,24 +41,15 @@ class SignInDemoState extends State<SignInDemo>
         ],
         listener: (user) {
           loggedIn = user != null;
-          errorMessage = auth.message;
           setState(() {});
         });
 
-    auth.signInSilently(
+    auth.signInWithGoogleSilently(
       listen: (account) {
         loggedIn = account != null;
-        errorMessage = auth.message;
         setState(() {});
       },
-      listener: (user) {
-        final test = user != null;
-      },
     );
-
-    auth.isLoggedIn().then((isIn) {
-      loggedIn = isIn;
-    });
   }
 
   @override
@@ -116,9 +104,8 @@ class SignInDemoState extends State<SignInDemo>
             subtitle: Text(auth.email),
           ),
           const Text("Signed in successfully."),
-          signInErrorMsg,
           RaisedButton(
-            child: const Text('Sign Out of Firebase'),
+            child: const Text('Sign Out'),
             onPressed: () {
               auth.signOut();
             },
@@ -129,71 +116,23 @@ class SignInDemoState extends State<SignInDemo>
               auth.disconnect();
             },
           ),
-          RaisedButton(
-            child: const Text('Just Quit'),
-            onPressed: () {
-              SystemChannels.platform
-                  .invokeMethod('SystemNavigator.pop');
-            },
-          ),
         ],
       );
     } else {
-      // This function is called by every RaisedButton widget.
-      Function signInFunc = (signIn) {
-        if (signIn) {
-          errorMessage = "";
-        } else {
-          errorMessage = auth.message;
-        }
-        setState(() {});
-      };
-
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           const Text("You are not currently signed in."),
-          signInErrorMsg,
-          RaisedButton(
-            child: const Text('Sign In With Facebook'),
-            onPressed: () {
-              auth.signInWithFacebook().then(signInFunc).catchError((err) {
-                if (err is! Exception) err = err.toString();
-                errorMessage = auth.message;
-              });
-            },
-          ),
-          RaisedButton(
-            child: const Text('Sign In With Twitter'),
-            onPressed: () {
-              auth
-                  .signInWithTwitter(
-                      key: "zl9ixhxd09NxjyEsI5JlDZAk9",
-                      secret:
-                          "rEx8Dyz2aGWixZiQb6SBcBWeRd3FrkIPy4fyw4jREDeTW2bIhk")
-                  .then(signInFunc)
-                  .catchError((err) {
-                if (err is! Exception) err = err.toString();
-                errorMessage = auth.message;
-              });
-            },
-          ),
           RaisedButton(
             child: const Text('Sign In With Google'),
             onPressed: () {
-              auth.signInWithGoogle().then(signInFunc).catchError((err) {
-                if (err is! Exception) err = err.toString();
-                errorMessage = auth.message;
-              });
+              auth.signInWithGoogle();
             },
           ),
           RaisedButton(
             child: const Text('Log in anonymously'),
             onPressed: () {
-              auth.signInAnonymously().then(signInFunc).catchError((err) {
-                if (err is! Exception) err = err.toString();
-                errorMessage = auth.message;
-              });
+              auth.signInAnonymously();
             },
           ),
           RaisedButton(
@@ -201,13 +140,7 @@ class SignInDemoState extends State<SignInDemo>
             onPressed: () async {
               List<String> ep = await dialogBox(context: context);
               if (ep == null || ep.isEmpty) return;
-              auth
-                  .signInWithEmailAndPassword(email: ep[0], password: ep[1])
-                  .then(signInFunc)
-                  .catchError((err) {
-                if (err is! Exception) err = err.toString();
-                errorMessage = auth.message;
-              });
+              auth.signInWithEmailAndPassword(email: ep[0], password: ep[1]);
             },
           ),
         ],
@@ -227,7 +160,6 @@ class SignInDemoState extends State<SignInDemo>
           Text("email: ${auth.email}"),
           Text("email verified: ${auth.isEmailVerified}"),
           Text("anonymous login: ${auth.isAnonymous}"),
-          Text("permissions: ${auth.permissions}"),
           Text("id token: ${auth.idToken}"),
           Text("access token: ${auth.accessToken}"),
           Text("information provider: ${auth.providerId}"),
@@ -237,15 +169,6 @@ class SignInDemoState extends State<SignInDemo>
           Text("signin provider: ${auth.signInProvider}"),
         ],
       );
-
-  Widget get signInErrorMsg => Container(
-      padding: EdgeInsets.all(10),
-      child: Center(
-          child: RichText(
-              text: TextSpan(
-        text: errorMessage,
-        style: TextStyle(color: Colors.red),
-      ))));
 }
 
 // Creates an alertDialog for the user to enter their email

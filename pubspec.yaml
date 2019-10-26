@@ -14,7 +14,7 @@ dependencies:
 #    path: ../../../libs/auth070
 #
 #
-  auth:
+  auth: ^4.0.0
 #    path: ../../../libs/auth
 #  auth:
 #    git:
@@ -28,6 +28,8 @@ dependencies:
 #  # https://pub.dartlang.org/packages/connectivity#-changelog-tab-
 #  connectivity:
 #  #"^0.3.0"
+
+  http: ^0.12.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
