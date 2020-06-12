@@ -10,6 +10,10 @@ import 'package:google_sign_in/google_sign_in.dart' show GoogleUserCircleAvatar;
 
 import 'package:auth/auth.dart' show Auth;
 
+import 'package:firebase_auth/firebase_auth.dart' show FirebaseUser;
+
+import 'package:google_sign_in/google_sign_in.dart' show GoogleSignInAccount;
+
 void main() {
   runApp(
     MaterialApp(
@@ -37,7 +41,7 @@ class SignInDemoState extends State<SignInDemo>
 
     tabController = TabController(length: 2, vsync: this);
 
-    auth = Auth.init(
+    auth = Auth(
         scopes: [
           'email',
           'https://www.googleapis.com/auth/contacts.readonly',
@@ -48,20 +52,24 @@ class SignInDemoState extends State<SignInDemo>
           setState(() {});
         });
 
-    auth.signInSilently(
-      listen: (account) {
-        loggedIn = account != null;
-        errorMessage = auth.message;
-        setState(() {});
-      },
-      listener: (user) {
-        final test = user != null;
-      },
-    );
+    signIn();
+  }
 
-    auth.isLoggedIn().then((isIn) {
-      loggedIn = isIn;
-    });
+  void signIn({
+    void listen(GoogleSignInAccount account),
+    void listener(FirebaseUser user),
+  }) async {
+    loggedIn = await auth.signInSilently();
+
+    // Don't sign in at all. Let the user sign in.
+//    if (!loggedIn) {
+//      loggedIn = await auth.signInAnonymously();
+//    }
+
+    if (!loggedIn) {
+      errorMessage = auth.message;
+    }
+    setState(() {});
   }
 
   @override
@@ -132,8 +140,7 @@ class SignInDemoState extends State<SignInDemo>
           RaisedButton(
             child: const Text('Just Quit'),
             onPressed: () {
-              SystemChannels.platform
-                  .invokeMethod('SystemNavigator.pop');
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
             },
           ),
         ],

@@ -52,7 +52,7 @@ class SignInDemoState extends State<SignInDemo> {
   void initState() {
     super.initState();
 
-    auth = Auth.init(
+    auth = Auth(
       scopes: <String>[
         'email',
         'https://www.googleapis.com/auth/contacts.readonly',

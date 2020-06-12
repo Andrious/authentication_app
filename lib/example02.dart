@@ -34,7 +34,7 @@ class SignInDemoState extends State<SignInDemo>
 
     tabController = TabController(length: 2, vsync: this);
 
-    auth = Auth.init(
+    auth = Auth(
         scopes: [
           'email',
           'https://www.googleapis.com/auth/contacts.readonly',
