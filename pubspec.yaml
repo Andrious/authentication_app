@@ -1,7 +1,7 @@
 name: authentication_app
 description: An example app demonstrating the library package, Auth, for Authentication.
 
-version: 1.4.1
+version: 1.4.2
 
 environment:
   sdk: '>=2.7.0 <3.0.0'

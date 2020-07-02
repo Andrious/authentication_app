@@ -23,7 +23,7 @@ PODS:
   - Firebase/CoreOnly (6.26.0):
     - FirebaseCore (= 6.7.2)
   - firebase_auth (0.0.1):
-    - Firebase/Auth (~> 6.0)
+    - Firebase/Auth (~> 6.3)
     - Firebase/Core
     - Flutter
   - firebase_core (0.0.1):
@@ -176,8 +176,8 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 9cc05bec0568a5955c82eb59ae95da0fe125b88d
   FBSDKLoginKit: ecc6fd43c81b60f5b5e9388d58f137aff4a5d00b
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6
-  firebase_auth: cd5627e6773255d15b73d763fd0878734289a509
-  firebase_core: a8a3fe72627891cb05558a6ba230b2061e75e18e
+  firebase_auth: af8784c4d8d87c36f730a305f97bfbcb24db024b
+  firebase_core: 335c02abd48672b7c83c683df833d0488a72e73e
   FirebaseAnalytics: 96634d356482d4f3af8fe459a0ebf19a99c71b75
   FirebaseAuth: 7047aec89c0b17ecd924a550c853f0c27ac6015e
   FirebaseAuthInterop: a0f37ae05833af156e72028f648d313f7e7592e9
@@ -188,7 +188,7 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_login_facebook: 7f2123e68cbe29ec9483b7a1111a9f6016ab24ab
   flutter_twitter: f33a30ee64ecf27e189e2f3cb53ce3318b8bb396
-  google_sign_in: decaf71f56e22fb1dc179de062177ae6df415716
+  google_sign_in: 6bd214b9c154f881422f5fe27b66aaa7bbd580cc
   GoogleAppMeasurement: 67458367830514fb20fd9e233496f1eef9d90185
   GoogleDataTransport: 9a8a16f79feffc7f42096743de2a7c4815e84020
   GoogleDataTransportCCTSupport: d70a561f7d236af529fee598835caad5e25f6d3d
