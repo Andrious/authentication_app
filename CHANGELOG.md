@@ -1,3 +1,7 @@
+## 1.4.0
+ July 02, 2020
+- iOS working copy after Flutter clean using Master channel
+
 ## 1.3.0
  June 11, 2020
 - updated .gitignore 
