@@ -1,3 +1,6 @@
+## 1.4.1
+ July 02, 2020
+- Included GoogleService-info.plist, and google-services.json
 ## 1.4.0
  July 02, 2020
 - iOS working copy after Flutter clean using Master channel
